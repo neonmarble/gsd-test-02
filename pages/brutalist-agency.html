@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAW STUDIO — We Build Brands That Hurt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --raw-black: #0a0a0a;
+                --raw-white: #f5f5f5;
+                --raw-gray: #8a8a8a;
+                --raw-red: #ff3300;
+                --raw-border: #333333;
+            }
+            body {
+                font-family: 'Fragment Mono', monospace;
+                background-color: var(--raw-black);
+                color: var(--raw-white);
+                overflow-x: hidden;
+            }
+            h1, h2, h3, .display {
+                font-family: 'Anton', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+            }
+        }
+        @layer components {
+            .grid-border {
+                border: 1px solid var(--raw-border);
+            }
+            .marquee-container {
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            .marquee-content {
+                display: inline-block;
+                animation: marquee 20s linear infinite;
+            }
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            .glitch-hover:hover {
+                animation: glitch 0.3s ease-in-out;
+                color: var(--raw-red);
+            }
+            @keyframes glitch {
+                0% { transform: translate(0); }
+                20% { transform: translate(-2px, 2px); }
+                40% { transform: translate(2px, -2px); }
+                60% { transform: translate(-2px, -2px); }
+                80% { transform: translate(2px, 2px); }
+                100% { transform: translate(0); }
+            }
+            .scan-line {
+                position: relative;
+            }
+            .scan-line::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: var(--raw-red);
+                opacity: 0.3;
+                animation: scan 4s linear infinite;
+            }
+            @keyframes scan {
+                0% { top: 0; }
+                100% { top: 100%; }
+            }
+            .brutalist-btn {
+                border: 2px solid var(--raw-white);
+                padding: 1rem 2rem;
+                font-family: 'Fragment Mono', monospace;
+                text-transform: uppercase;
+                transition: all 0.1s;
+                position: relative;
+            }
+            .brutalist-btn:hover {
+                background: var(--raw-red);
+                border-color: var(--raw-red);
+                color: var(--raw-white);
+                transform: translate(-4px, -4px);
+                box-shadow: 4px 4px 0 var(--raw-white);
+            }
+            .brutalist-card {
+                border: 1px solid var(--raw-border);
+                transition: all 0.2s;
+            }
+            .brutalist-card:hover {
+                border-color: var(--raw-red);
+                transform: translate(-4px, -4px);
+                box-shadow: 4px 4px 0 var(--raw-red);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Marquee Banner -->
+    <div class="marquee-container bg-[var(--raw-red)] text-[var(--raw-black)] py-2 border-b border-[var(--raw-border)]">
+        <div class="marquee-content font-bold text-sm tracking-widest">
+            NOW ACCEPTING PROJECTS — Q3 2026 — NOW ACCEPTING PROJECTS — Q3 2026 — NOW ACCEPTING PROJECTS — Q3 2026 — NOW ACCEPTING PROJECTS — Q3 2026 —
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[var(--raw-black)] border-b border-[var(--raw-border)]">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#" class="display text-2xl tracking-tighter hover:text-[var(--raw-red)] transition-colors">
+                    RAW<span class="text-[var(--raw-red)]">.</span>STUDIO
+                </a>
+                <div class="hidden md:flex items-center space-x-0">
+                    <a href="#work" class="px-6 py-5 border-l border-[var(--raw-border)] hover:bg-[var(--raw-white)] hover:text-[var(--raw-black)] transition-all text-sm tracking-widest uppercase">Work</a>
+                    <a href="#services" class="px-6 py-5 border-l border-[var(--raw-border)] hover:bg-[var(--raw-white)] hover:text-[var(--raw-black)] transition-all text-sm tracking-widest uppercase">Services</a>
+                    <a href="#about" class="px-6 py-5 border-l border-[var(--raw-border)] hover:bg-[var(--raw-white)] hover:text-[var(--raw-black)] transition-all text-sm tracking-widest uppercase">About</a>
+                    <a href="#contact" class="px-6 py-5 border-l border-r border-[var(--raw-border)] hover:bg-[var(--raw-red)] hover:text-[var(--raw-white)] hover:border-[var(--raw-red)] transition-all text-sm tracking-widest uppercase">Contact</a>
+                </div>
+                <button class="md:hidden text-[var(--raw-white)] p-2" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[85vh] flex items-center border-b border-[var(--raw-border)] scan-line">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                <div class="lg:col-span-8">
+                    <p class="text-[var(--raw-gray)] text-sm tracking-widest mb-6 uppercase">Creative Direction / Brand Identity / Digital Experience</p>
+                    <h1 class="text-[clamp(3rem,12vw,10rem)] leading-[0.9] tracking-tighter">
+                        WE BUILD<br>
+                        <span class="text-[var(--raw-red)]">BRANDS</span><br>
+                        THAT HURT<br>
+                        <span class="text-[var(--raw-gray)]">(IN A GOOD WAY)</span>
+                    </h1>
+                </div>
+                <div class="lg:col-span-4 pb-4">
+                    <p class="text-[var(--raw-gray)] text-sm leading-relaxed mb-8 max-w-sm">
+                        A brutalist creative agency based in Berlin. We don't do safe. We do memorable. Strategy, design, and development for brands that want to stand out or die trying.
+                    </p>
+                    <a href="#work" class="brutalist-btn inline-block">VIEW SELECTED WORK</a>
+                </div>
+            </div>
+        </div>
+        <!-- Decorative grid overlay -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.03]" style="background-image: linear-gradient(var(--raw-white) 1px, transparent 1px), linear-gradient(90deg, var(--raw-white) 1px, transparent 1px); background-size: 50px 50px;"></div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="border-b border-[var(--raw-border)]">
+        <div class="grid grid-cols-2 md:grid-cols-4">
+            <div class="p-8 border-r border-[var(--raw-border)]">
+                <p class="display text-4xl md:text-5xl text-[var(--raw-red)]">47</p>
+                <p class="text-[var(--raw-gray)] text-xs tracking-widest uppercase mt-2">Projects Delivered</p>
+            </div>
+            <div class="p-8 border-r border-[var(--raw-border)]">
+                <p class="display text-4xl md:text-5xl">12</p>
+                <p class="text-[var(--raw-gray)] text-xs tracking-widest uppercase mt-2">International Awards</p>
+            </div>
+            <div class="p-8 border-r border-[var(--raw-border)]">
+                <p class="display text-4xl md:text-5xl">8</p>
+                <p class="text-[var(--raw-gray)] text-xs tracking-widest uppercase mt-2">Years of Chaos</p>
+            </div>
+            <div class="p-8">
+                <p class="display text-4xl md:text-5xl text-[var(--raw-red)]">0</p>
+                <p class="text-[var(--raw-gray)] text-xs tracking-widest uppercase mt-2">F*cks Given</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 md:py-32 border-b border-[var(--raw-border)]">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-16">
+                <h2 class="text-5xl md:text-7xl">SELECTED<br>WORK</h2>
+                <p class="text-[var(--raw-gray)] text-sm hidden md:block">2019 — 2026</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--raw-border)]">
+                <!-- Project 1 -->
+                <div class="brutalist-card bg-[var(--raw-black)] p-0 group cursor-pointer">
+                    <div class="aspect-[4/3] overflow-hidden border-b border-[var(--raw-border)]">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="Abstract brutalist 3D render for Neon Corp rebrand" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[var(--raw-red)] text-xs tracking-widest mb-2">BRAND IDENTITY</p>
+                        <h3 class="text-2xl mb-2 glitch-hover inline-block">NEON CORP</h3>
+                        <p class="text-[var(--raw-gray)] text-sm">Complete visual overhaul for a cybersecurity firm. We made them look dangerous.</p>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="brutalist-card bg-[var(--raw-black)] p-0 group cursor-pointer">
+                    <div class="aspect-[4/3] overflow-hidden border-b border-[var(--raw-border)]">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=800&q=80" alt="Bold typography poster design for Type Festival" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[var(--raw-red)] text-xs tracking-widest mb-2">EXPERIENTIAL</p>
+                        <h3 class="text-2xl mb-2 glitch-hover inline-block">TYPE FESTIVAL 2025</h3>
+                        <p class="text-[var(--raw-gray)] text-sm">Identity system for Europe's largest typography conference. 200+ applications.</p>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="brutalist-card bg-[var(--raw-black)] p-0 group cursor-pointer">
+                    <div class="aspect-[4/3] overflow-hidden border-b border-[var(--raw-border)]">
+                        <img src="https://images.unsplash.com/photo-1493397212122-2b85dba8106b?auto=format&fit=crop&w=800&q=80" alt="Architectural brutalist photography for Concrete Magazine" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[var(--raw-red)] text-xs tracking-widest mb-2">EDITORIAL</p>
+                        <h3 class="text-2xl mb-2 glitch-hover inline-block">CONCRETE MAGAZINE</h3>
+                        <p class="text-[var(--raw-gray)] text-sm">Art direction and digital platform for architecture's most controversial publication.</p>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="brutalist-card bg-[var(--raw-black)] p-0 group cursor-pointer">
+                    <div class="aspect-[4/3] overflow-hidden border-b border-[var(--raw-border)]">
+                        <img src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=800&q=80" alt="Liquid metal 3D render for Versus App launch" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[var(--raw-red)] text-xs tracking-widest mb-2">PRODUCT</p>
+                        <h3 class="text-2xl mb-2 glitch-hover inline-block">VERSUS APP</h3>
+                        <p class="text-[var(--raw-gray)] text-sm">Launch campaign for a competitive gaming platform. 2M+ impressions in 48 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 md:py-32 border-b border-[var(--raw-border)]">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl md:text-7xl mb-16">WHAT WE<br>DO</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--raw-border)]">
+                <div class="bg-[var(--raw-black)] p-8 brutalist-card">
+                    <p class="text-[var(--raw-red)] text-5xl display mb-6">01</p>
+                    <h3 class="text-2xl mb-4">Strategy</h3>
+                    <p class="text-[var(--raw-gray)] text-sm leading-relaxed">Brand positioning, market analysis, competitive audits, and creative direction that actually means something.</p>
+                </div>
+                <div class="bg-[var(--raw-black)] p-8 brutalist-card">
+                    <p class="text-[var(--raw-red)] text-5xl display mb-6">02</p>
+                    <h3 class="text-2xl mb-4">Design</h3>
+                    <p class="text-[var(--raw-gray)] text-sm leading-relaxed">Visual identity, art direction, UI/UX, and packaging that refuses to blend in. Ever.</p>
+                </div>
+                <div class="bg-[var(--raw-black)] p-8 brutalist-card">
+                    <p class="text-[var(--raw-red)] text-5xl display mb-6">03</p>
+                    <h3 class="text-2xl mb-4">Development</h3>
+                    <p class="text-[var(--raw-gray)] text-sm leading-relaxed">Websites, apps, and digital experiences built with precision and a healthy disrespect for conventions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-32">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-5xl md:text-7xl mb-8">LET'S MAKE<br>SOMETHING<br><span class="text-[var(--raw-red)]">UGLY</span></h2>
+                    <p class="text-[var(--raw-gray)] text-sm leading-relaxed mb-8 max-w-md">
+                        Or beautiful. Or confusing. Or all three. We don't care what your mom thinks. We care about impact.
+                    </p>
+                    <div class="space-y-4 text-sm">
+                        <p><span class="text-[var(--raw-gray)]">EMAIL:</span> <a href="mailto:hello@rawstudio.berlin" class="hover:text-[var(--raw-red)] transition-colors">HELLO@RAWSTUDIO.BERLIN</a></p>
+                        <p><span class="text-[var(--raw-gray)]">LOCATION:</span> KREUZBERG, BERLIN</p>
+                        <p><span class="text-[var(--raw-gray)]">PHONE:</span> +49 30 1234 5678</p>
+                    </div>
+                </div>
+                <div>
+                    <form class="space-y-0 border border-[var(--raw-border)]" onsubmit="event.preventDefault(); alert('Message received. We will respond within 48 hours if we like your project.');">
+                        <div class="border-b border-[var(--raw-border)]">
+                            <input type="text" placeholder="YOUR NAME" required class="w-full bg-transparent p-6 text-sm tracking-widest placeholder:text-[var(--raw-gray)] focus:outline-none focus:bg-[var(--raw-white)] focus:text-[var(--raw-black)] transition-colors">
+                        </div>
+                        <div class="border-b border-[var(--raw-border)]">
+                            <input type="email" placeholder="YOUR EMAIL" required class="w-full bg-transparent p-6 text-sm tracking-widest placeholder:text-[var(--raw-gray)] focus:outline-none focus:bg-[var(--raw-white)] focus:text-[var(--raw-black)] transition-colors">
+                        </div>
+                        <div class="border-b border-[var(--raw-border)]">
+                            <input type="text" placeholder="PROJECT BUDGET" class="w-full bg-transparent p-6 text-sm tracking-widest placeholder:text-[var(--raw-gray)] focus:outline-none focus:bg-[var(--raw-white)] focus:text-[var(--raw-black)] transition-colors">
+                        </div>
+                        <div class="border-b border-[var(--raw-border)]">
+                            <textarea placeholder="TELL US EVERYTHING" rows="5" class="w-full bg-transparent p-6 text-sm tracking-widest placeholder:text-[var(--raw-gray)] focus:outline-none focus:bg-[var(--raw-white)] focus:text-[var(--raw-black)] transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full brutalist-btn bg-[var(--raw-black)] text-[var(--raw-white)]">SEND MESSAGE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-[var(--raw-border)] py-8">
+        <div class="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-[var(--raw-gray)] text-xs tracking-widest">© 2026 RAW STUDIO. ALL RIGHTS RESERVED.</p>
+            <div class="flex space-x-6 text-xs tracking-widest">
+                <a href="#" class="hover:text-[var(--raw-red)] transition-colors">INSTAGRAM</a>
+                <a href="#" class="hover:text-[var(--raw-red)] transition-colors">BEHANCE</a>
+                <a href="#" class="hover:text-[var(--raw-red)] transition-colors">LINKEDIN</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

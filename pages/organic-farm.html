@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Root &amp; Stem Farm — Grown with Intention</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --root-terracotta: #8c4a32;
+                --root-sage: #6b8e5a;
+                --root-cream: #f4e9d7;
+                --root-brown: #3d3229;
+                --root-clay: #b8835c;
+                --root-moss: #4a5d3a;
+            }
+            body {
+                font-family: 'Josefin Sans', sans-serif;
+                background-color: var(--root-cream);
+                color: var(--root-brown);
+                overflow-x: hidden;
+            }
+            h1, h2, h3, .display {
+                font-family: 'Cormorant Garamond', serif;
+                font-weight: 400;
+            }
+        }
+        @layer components {
+            .organic-btn {
+                border: 1.5px solid var(--root-terracotta);
+                padding: 1rem 2.5rem;
+                font-family: 'Josefin Sans', sans-serif;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                color: var(--root-terracotta);
+                transition: all 0.4s ease;
+                position: relative;
+                overflow: hidden;
+            }
+            .organic-btn::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 0;
+                background: var(--root-terracotta);
+                transition: height 0.4s ease;
+                z-index: -1;
+            }
+            .organic-btn:hover::after {
+                height: 100%;
+            }
+            .organic-btn:hover {
+                color: var(--root-cream);
+            }
+            .organic-btn-light {
+                border: 1.5px solid var(--root-cream);
+                padding: 1rem 2.5rem;
+                font-family: 'Josefin Sans', sans-serif;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                font-size: 0.75rem;
+                color: var(--root-cream);
+                transition: all 0.4s ease;
+            }
+            .organic-btn-light:hover {
+                background: var(--root-cream);
+                color: var(--root-terracotta);
+            }
+            .blob-shape {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            .blob-shape-2 {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            .float-slow {
+                animation: floatSlow 8s ease-in-out infinite;
+            }
+            @keyframes floatSlow {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                33% { transform: translateY(-15px) rotate(2deg); }
+                66% { transform: translateY(10px) rotate(-1deg); }
+            }
+            .float-slower {
+                animation: floatSlower 12s ease-in-out infinite;
+            }
+            @keyframes floatSlower {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-20px) rotate(3deg); }
+            }
+            .grow-card {
+                transition: all 0.5s ease;
+            }
+            .grow-card:hover {
+                transform: translateY(-8px) scale(1.02);
+            }
+            .grow-card:hover .grow-img {
+                transform: scale(1.1);
+            }
+            .hand-drawn-border {
+                border: 2px solid var(--root-terracotta);
+                border-radius: 2px 255px 3px 25px / 255px 5px 225px 5px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-[var(--root-cream)]/95 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[var(--root-sage)] blob-shape flex items-center justify-center">
+                        <svg class="w-5 h-5 text-[var(--root-cream)]" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl tracking-wide font-medium">Root &amp; Stem</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#about" class="text-sm tracking-wider hover:text-[var(--root-terracotta)] transition-colors">Our Story</a>
+                    <a href="#produce" class="text-sm tracking-wider hover:text-[var(--root-terracotta)] transition-colors">Produce</a>
+                    <a href="#community" class="text-sm tracking-wider hover:text-[var(--root-terracotta)] transition-colors">Community</a>
+                    <a href="#visit" class="organic-btn">Visit Us</a>
+                </div>
+                <button class="md:hidden text-[var(--root-brown)] p-2" aria-label="Open menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <!-- Organic blob decorations -->
+        <div class="absolute top-20 right-[-100px] w-[400px] h-[400px] bg-[var(--root-sage)]/10 blob-shape float-slow pointer-events-none"></div>
+        <div class="absolute bottom-20 left-[-80px] w-[300px] h-[300px] bg-[var(--root-terracotta)]/10 blob-shape-2 float-slower pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <p class="text-[var(--root-terracotta)] text-sm tracking-[0.2em] uppercase mb-6">Family Farm · Est. 1987 · Hudson Valley</p>
+                    <h1 class="text-6xl md:text-7xl lg:text-8xl leading-[0.9] mb-8">
+                        Grown with<br>
+                        <span class="italic text-[var(--root-sage)]">Intention</span>
+                    </h1>
+                    <p class="text-lg text-[var(--root-brown)]/70 leading-relaxed mb-10 max-w-lg">
+                        We believe food should nourish both body and land. Every seed we plant is a commitment to regenerative agriculture, biodiversity, and the community that sustains us.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#produce" class="organic-btn text-center">Explore Our Produce</a>
+                        <a href="#visit" class="organic-btn-light bg-[var(--root-sage)] border-[var(--root-sage)] text-center hover:bg-[var(--root-moss)] hover:border-[var(--root-moss)] hover:text-[var(--root-cream)]">Plan Your Visit</a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-[4/5] hand-drawn-border overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80" alt="Lush organic vegetable farm at golden hour with rows of crops" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-[var(--root-cream)] hand-drawn-border p-6 max-w-[200px]">
+                        <p class="text-3xl display text-[var(--root-terracotta)]">127</p>
+                        <p class="text-sm text-[var(--root-brown)]/60">Acres of regenerative farmland</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section id="about" class="py-24 md:py-32 bg-[var(--root-sage)] text-[var(--root-cream)]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <p class="text-sm tracking-[0.2em] uppercase mb-4 opacity-70">Our Principles</p>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl leading-tight">
+                    Farming the Way<br>Nature Intended
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[var(--root-cream)]/10 blob-shape flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl mb-3">Regenerative Soil</h3>
+                    <p class="opacity-70 leading-relaxed text-sm">
+                        We never till. Cover crops, compost, and rotational grazing build soil organic matter year after year, sequestering carbon and increasing biodiversity.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[var(--root-cream)]/10 blob-shape flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl mb-3">Seed Sovereignty</h3>
+                    <p class="opacity-70 leading-relaxed text-sm">
+                        We save and breed our own open-pollinated seeds, adapted to our specific microclimate. No GMOs, no patents — just generations of farmer knowledge.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-[var(--root-cream)]/10 blob-shape flex items-center justify-center">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl mb-3">Community First</h3>
+                    <p class="opacity-70 leading-relaxed text-sm">
+                        Our CSA feeds 400 local families. We partner with food banks, schools, and community kitchens to ensure everyone has access to nutritious food.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produce Section -->
+    <section id="produce" class="py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+                <div>
+                    <p class="text-[var(--root-terracotta)] text-sm tracking-[0.2em] uppercase mb-4">Seasonal Offerings</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl leading-tight">What's Growing Now</h2>
+                </div>
+                <p class="text-[var(--root-brown)]/60 max-w-sm text-sm leading-relaxed">
+                    Everything we sell was harvested within 48 hours. Seasonality means our selection changes — and that's the beauty of it.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Produce 1 -->
+                <div class="grow-card group cursor-pointer">
+                    <div class="aspect-[3/4] overflow-hidden hand-drawn-border mb-4">
+                        <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?auto=format&fit=crop&w=400&q=80" alt="Heirloom tomatoes in various colors on a wooden surface" class="grow-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl mb-1">Heirloom Tomatoes</h3>
+                    <p class="text-[var(--root-brown)]/50 text-sm">12 varieties · Peak season</p>
+                </div>
+                <!-- Produce 2 -->
+                <div class="grow-card group cursor-pointer">
+                    <div class="aspect-[3/4] overflow-hidden hand-drawn-border mb-4">
+                        <img src="https://images.unsplash.com/photo-1557844352-761f2565b576?auto=format&fit=crop&w=400&q=80" alt="Fresh leafy greens and kale bunches" class="grow-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl mb-1">Mixed Greens</h3>
+                    <p class="text-[var(--root-brown)]/50 text-sm">Kale, chard, arugula, mizuna</p>
+                </div>
+                <!-- Produce 3 -->
+                <div class="grow-card group cursor-pointer">
+                    <div class="aspect-[3/4] overflow-hidden hand-drawn-border mb-4">
+                        <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=400&q=80" alt="Colorful root vegetables including carrots and beets" class="grow-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl mb-1">Root Vegetables</h3>
+                    <p class="text-[var(--root-brown)]/50 text-sm">Carrots, beets, radishes, turnips</p>
+                </div>
+                <!-- Produce 4 -->
+                <div class="grow-card group cursor-pointer">
+                    <div class="aspect-[3/4] overflow-hidden hand-drawn-border mb-4">
+                        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=400&q=80" alt="Fresh herbs in small bunches including basil and rosemary" class="grow-img w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <h3 class="text-xl mb-1">Fresh Herbs</h3>
+                    <p class="text-[var(--root-brown)]/50 text-sm">Basil, cilantro, dill, parsley</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community / CSA Section -->
+    <section id="community" class="py-24 md:py-32 bg-[var(--root-brown)] text-[var(--root-cream)] relative overflow-hidden">
+        <!-- Decorative blobs -->
+        <div class="absolute top-[-100px] right-[-100px] w-[300px] h-[300px] bg-[var(--root-sage)]/10 blob-shape float-slow"></div>
+        <div class="absolute bottom-[-50px] left-[-50px] w-[200px] h-[200px] bg-[var(--root-terracotta)]/10 blob-shape-2 float-slower"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="aspect-[4/3] hand-drawn-border overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=800&q=80" alt="Community gathering at a farmers market with fresh produce" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -top-4 -right-4 bg-[var(--root-terracotta)] text-[var(--root-cream)] px-6 py-3 hand-drawn-border">
+                            <p class="text-sm tracking-wider">EST. 1987</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <p class="text-[var(--root-clay)] text-sm tracking-[0.2em] uppercase mb-4">Community Supported Agriculture</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
+                        Join Our<br><span class="italic">Harvest Family</span>
+                    </h2>
+                    <p class="opacity-70 leading-relaxed mb-6">
+                        Our CSA program connects you directly to the land that feeds you. Each week, receive a curated box of freshly harvested vegetables, fruits, and herbs — whatever is at its peak.
+                    </p>
+                    <p class="opacity-70 leading-relaxed mb-10">
+                        Members also receive invitations to farm dinners, u-pick days, and seasonal celebrations. It's more than a subscription — it's a relationship with your food.
+                    </p>
+                    <div class="grid grid-cols-3 gap-6 mb-10">
+                        <div class="text-center">
+                            <p class="text-3xl display text-[var(--root-sage)]">400</p>
+                            <p class="text-xs tracking-wider uppercase opacity-50 mt-1">Member Families</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl display text-[var(--root-sage)]">52</p>
+                            <p class="text-xs tracking-wider uppercase opacity-50 mt-1">Weeks/Year</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl display text-[var(--root-sage)]">60+</p>
+                            <p class="text-xs tracking-wider uppercase opacity-50 mt-1">Crop Varieties</p>
+                        </div>
+                    </div>
+                    <a href="#visit" class="organic-btn-light bg-[var(--root-sage)] border-[var(--root-sage)] inline-block hover:bg-[var(--root-moss)] hover:border-[var(--root-moss)]">Join the CSA</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visit Section -->
+    <section id="visit" class="py-24 md:py-32">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div>
+                    <p class="text-[var(--root-terracotta)] text-sm tracking-[0.2em] uppercase mb-4">Visit the Farm</p>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
+                        Come See<br>Where It Grows
+                    </h2>
+                    <p class="text-[var(--root-brown)]/60 leading-relaxed mb-10">
+                        We welcome visitors year-round. Walk the fields, meet the farmers, and taste produce straight from the vine. Our farm store is open daily with fresh-picked vegetables, pastured eggs, and handmade preserves.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-[var(--root-sage)]/10 blob-shape flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-[var(--root-sage)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium mb-1">Address</p>
+                                <p class="text-[var(--root-brown)]/50 text-sm">127 River Road<br>Amenia, NY 12501</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-[var(--root-sage)]/10 blob-shape flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-[var(--root-sage)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium mb-1">Farm Store Hours</p>
+                                <p class="text-[var(--root-brown)]/50 text-sm">Tuesday — Sunday: 9am — 6pm<br>Closed Mondays</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-[var(--root-sage)]/10 blob-shape flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-[var(--root-sage)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium mb-1">Contact</p>
+                                <p class="text-[var(--root-brown)]/50 text-sm">(845) 555-0147<br>hello@rootandstem.farm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[var(--root-sage)]/5 p-10 hand-drawn-border">
+                    <h3 class="text-2xl mb-6">Stay in Touch</h3>
+                    <p class="text-[var(--root-brown)]/60 text-sm mb-8">Get weekly harvest updates, recipes, and invitations to farm events.</p>
+                    <form class="space-y-4" onsubmit="event.preventDefault(); alert('Welcome to the Root & Stem community!');">
+                        <div>
+                            <input type="text" placeholder="Your name" required class="w-full bg-transparent border-b-2 border-[var(--root-terracotta)]/30 py-3 text-sm focus:outline-none focus:border-[var(--root-terracotta)] transition-colors placeholder:text-[var(--root-brown)]/40">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Your email" required class="w-full bg-transparent border-b-2 border-[var(--root-terracotta)]/30 py-3 text-sm focus:outline-none focus:border-[var(--root-terracotta)] transition-colors placeholder:text-[var(--root-brown)]/40">
+                        </div>
+                        <button type="submit" class="organic-btn w-full mt-4">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-[var(--root-terracotta)]/20 py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-[var(--root-sage)] blob-shape flex items-center justify-center">
+                    <svg class="w-4 h-4 text-[var(--root-cream)]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <span class="text-lg tracking-wide">Root &amp; Stem</span>
+            </div>
+            <p class="text-[var(--root-brown)]/40 text-sm">© 2026 Root &amp; Stem Farm. Grown with love.</p>
+            <div class="flex space-x-6 text-sm">
+                <a href="#" class="text-[var(--root-brown)]/40 hover:text-[var(--root-terracotta)] transition-colors">Instagram</a>
+                <a href="#" class="text-[var(--root-brown)]/40 hover:text-[var(--root-terracotta)] transition-colors">Newsletter</a>
+                <a href="#" class="text-[var(--root-brown)]/40 hover:text-[var(--root-terracotta)] transition-colors">Press</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
