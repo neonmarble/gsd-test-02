@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kōcha · 紅茶 — Wabi-Sabi Tea House</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a1a;
+            --washi: #f5f0e8;
+            --washi-dark: #e8e0d0;
+            --rust: #8b4513;
+            --rust-light: #a0522d;
+            --moss: #4a6741;
+            --moss-light: #5a7a50;
+            --stone: #9a8a7a;
+            --water: #8ab4a8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--washi);
+            color: var(--ink);
+            font-family: 'EB Garamond', serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .zen { font-family: 'Zen Kurenaido', sans-serif; }
+        .garamond { font-family: 'EB Garamond', serif; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes inkSpread { from { width: 0; opacity: 0; } to { width: 100%; opacity: 1; } }
+        @keyframes breath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes ripple { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.5); opacity: 0; } }
+        @keyframes paperReveal { from { opacity: 0; transform: scaleY(0); } to { opacity: 1; transform: scaleY(1); } }
+
+        .fade-in { opacity: 0; animation: fadeInUp 1.2s ease-out forwards; }
+        .f-delay-1 { animation-delay: 0.3s; }
+        .f-delay-2 { animation-delay: 0.6s; }
+        .f-delay-3 { animation-delay: 0.9s; }
+        .f-delay-4 { animation-delay: 1.2s; }
+
+        .breath { animation: breath 8s ease-in-out infinite; }
+
+        /* Ink wash texture */
+        .ink-wash {
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse at 70% 20%, rgba(139,69,19,0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 80%, rgba(74,103,65,0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(245,240,232,0.5) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Paper texture overlay */
+        .paper-overlay {
+            position: fixed; inset: 0; z-index: 0;
+            opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.3'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .ink-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--ink) 30%, var(--ink) 70%, transparent 100%);
+            opacity: 0.15;
+            animation: inkSpread 1.5s ease-out forwards;
+        }
+
+        .washi-card {
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(26,26,26,0.06);
+            transition: all 0.6s ease;
+        }
+        .washi-card:hover {
+            background: rgba(255,255,255,0.7);
+            border-color: rgba(139,69,19,0.15);
+        }
+
+        .tealight {
+            position: relative;
+        }
+        .tealight::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 60px; height: 60px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245,240,232,0.3) 0%, transparent 70%);
+            animation: ripple 4s ease-out infinite;
+        }
+
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .asymmetric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ink-wash"></div>
+<div class="paper-overlay"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(245,240,232,0.85); backdrop-filter: blur(12px);">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="zen text-2xl" style="color: var(--rust);">紅茶</span>
+            <span class="garamond text-lg italic" style="color: var(--stone);">kōcha</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-sm garamond">
+            <a href="#philosophy" class="hover:text-rust transition-colors" style="color: var(--stone);">Philosophy</a>
+            <a href="#ceremonies" class="hover:text-rust transition-colors" style="color: var(--stone);">Ceremonies</a>
+            <a href="#tea" class="hover:text-rust transition-colors" style="color: var(--stone);">Our Teas</a>
+            <a href="#visit" class="px-6 py-2.5 text-sm transition-all rounded" style="background: var(--rust); color: var(--washi);">Visit the House</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative min-h-screen flex items-center pt-20">
+    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="flex items-center gap-3 mb-8">
+                    <span class="zen text-4xl" style="color: var(--rust);">侘</span>
+                    <span class="w-8 h-px" style="background: var(--ink); opacity: 0.15;"></span>
+                    <span class="zen text-4xl" style="color: var(--moss);">寂</span>
+                </div>
+                <h1 class="zen text-6xl md:text-8xl leading-tight mb-6 fade-in" style="color: var(--ink); letter-spacing: 0.1em;">
+                    不完全<br>
+                    の美
+                </h1>
+                <p class="garamond text-2xl italic mb-2 text-stone fade-in f-delay-1" style="color: var(--stone);">The beauty of imperfection.</p>
+                <p class="text-base leading-relaxed mb-8 max-w-md fade-in f-delay-2" style="color: #6a5a4a;">
+                    In a world that demands perfection, we offer tea. A quiet space where cracks are celebrated, asymmetry is beauty, and every moment is complete as it is.
+                </p>
+                <div class="flex flex-wrap gap-4 fade-in f-delay-3">
+                    <a href="#visit" class="px-8 py-4 text-sm tracking-wider transition-all rounded" style="background: var(--ink); color: var(--washi);">Experience the Ceremony</a>
+                    <a href="#philosophy" class="px-8 py-4 text-sm tracking-wider transition-all rounded" style="border: 1px solid var(--ink); color: var(--ink); opacity: 0.6;">Our Way →</a>
+                </div>
+            </div>
+            <div class="hidden md:flex justify-center">
+                <div class="relative fade-in f-delay-2">
+                    <div class="w-72 h-96 relative">
+                        <div class="absolute inset-0 flex items-center justify-center" style="border: 1px solid rgba(26,26,26,0.08); border-radius: 60% 40% 40% 60% / 50% 40% 60% 50%;">
+                            <div class="text-center breath">
+                                <span class="zen text-7xl block mb-4" style="color: var(--rust);">🍵</span>
+                                <p class="garamold text-xs italic" style="color: var(--stone);">"Ichi-go ichi-e"</p>
+                                <p class="text-[10px] mt-1" style="color: var(--stone);">One encounter, one moment</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-8 -right-8 w-20 h-20 rounded-full" style="background: radial-gradient(circle, var(--moss-light), transparent 70%); opacity: 0.3;"></div>
+                        <div class="absolute bottom-12 -left-6 w-16 h-16 rounded-full" style="background: radial-gradient(circle, var(--rust-light), transparent 70%); opacity: 0.2;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Philosophy Section -->
+<section class="py-32 relative" id="philosophy">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20">
+            <span class="zen text-3xl block mb-4" style="color: var(--rust);">わび・さび</span>
+            <h2 class="garamond text-4xl md:text-5xl italic mb-4" style="color: var(--ink);">Finding beauty in the imperfect</h2>
+            <div class="ink-line max-w-xs mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="washi-card rounded-lg p-8 text-center fade-in">
+                <span class="zen text-6xl block mb-6" style="color: var(--rust);">侘</span>
+                <h3 class="garamond text-xl mb-3">Wabi</h3>
+                <p class="text-sm leading-relaxed" style="color: #6a5a4a;">The beauty of simplicity and austerity. A single flower in a rough clay vase. The quiet elegance of untouched wood. Finding richness in restraint.</p>
+            </div>
+            <div class="washi-card rounded-lg p-8 text-center fade-in f-delay-1">
+                <span class="zen text-6xl block mb-6" style="color: var(--moss);">寂</span>
+                <h3 class="garamond text-xl mb-3">Sabi</h3>
+                <p class="text-sm leading-relaxed" style="color: #6a5a4a;">The beauty of age and wear. A bronze teapot, softened by decades of use. Cracks filled with gold — kintsugi — making brokenness the most precious part.</p>
+            </div>
+            <div class="washi-card rounded-lg p-8 text-center fade-in f-delay-2">
+                <span class="zen text-6xl block mb-6" style="color: var(--ink);">茶</span>
+                <h3 class="garamond text-xl mb-3">Cha</h3>
+                <p class="text-sm leading-relaxed" style="color: #6a5a4a;">The way of tea. Not a beverage, but a practice — a ritual of presence. Each bowl prepared with complete attention. Each sip, a meditation on impermanence.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ceremonies Section -->
+<section class="py-32 relative" id="ceremonies" style="background: rgba(245,240,232,0.5);">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="asymmetric-grid">
+            <div class="col-span-2 md:col-span-1">
+                <span class="text-sm tracking-widest" style="color: var(--stone);">CEREMONIES</span>
+                <h2 class="garamond text-4xl md:text-5xl italic mt-4 mb-6" style="color: var(--ink);">The way of<br>tea is the<br>way of life.</h2>
+                <p class="text-base leading-relaxed mb-6" style="color: #6a5a4a;">
+                    Our tea master, Keiko Tanaka, studied for fourteen years at the Urasenke school in Kyoto before bringing the chanoyu tradition to this house. Every ceremony is an act of living art — a poem composed in gestures, silence, and steam.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-px" style="background: var(--ink); opacity: 0.15;"></div>
+                    <span class="text-xs text-stone garamond italic" style="color: var(--stone);">Reservation required</span>
+                </div>
+            </div>
+            <div class="washi-card rounded-lg p-8">
+                <span class="zen text-3xl block mb-4">🌅</span>
+                <h3 class="garamond text-lg mb-2">Morning Ceremony</h3>
+                <p class="text-sm mb-3" style="color: #6a5a4a;">The first tea of the day. Matcha prepared in silence as the sun rises over the garden.</p>
+                <p class="text-xs" style="color: var(--rust);">7:00 AM · 60 min</p>
+            </div>
+            <div class="washi-card rounded-lg p-8">
+                <span class="zen text-3xl block mb-4">🌙</span>
+                <h3 class="garamond text-lg mb-2">Twilight Gathering</h3>
+                <p class="text-sm mb-3" style="color: #6a5a4a;">An evening ceremony by candlelight. Koicha (thick tea) served with seasonal wagashi.</p>
+                <p class="text-xs" style="color: var(--rust);">6:00 PM · 90 min</p>
+            </div>
+            <div class="washi-card rounded-lg p-8">
+                <span class="zen text-3xl block mb-4">🍂</span>
+                <h3 class="garamond text-lg mb-2">Seasonal Offering</h3>
+                <p class="text-sm mb-3" style="color: #6a5a4a;">A ceremony that changes with the seasons. Autumn leaves, winter snow, spring blossoms.</p>
+                <p class="text-xs" style="color: var(--rust);">By appointment · 120 min</p>
+            </div>
+            <div class="washi-card rounded-lg p-8">
+                <span class="zen text-3xl block mb-4">📜</span>
+                <h3 class="garamond text-lg mb-2">Private Instruction</h3>
+                <p class="text-sm mb-3" style="color: #6a5a4a;">Learn the fundamentals of chanoyu: how to fold the fukusa, whisk matcha, and bow.</p>
+                <p class="text-xs" style="color: var(--rust);">By appointment · 60 min</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tea Selection Section -->
+<section class="py-32 relative" id="tea">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="text-sm tracking-widest" style="color: var(--moss);">OUR TEAS</span>
+            <h2 class="garamond text-4xl md:text-5xl italic mt-4 mb-4" style="color: var(--ink);">Leaves from the mountain,<br>steeped with intention.</h2>
+            <div class="ink-line max-w-xs mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-4 gap-6">
+            <div class="washi-card rounded-lg p-6 text-center fade-in">
+                <span class="zen text-4xl block mb-4" style="color: var(--moss);">抹</span>
+                <h3 class="garamond text-lg mb-2">Matcha</h3>
+                <p class="text-xs italic mb-3" style="color: var(--stone);">Uji, Kyoto</p>
+                <p class="text-sm" style="color: #6a5a4a;">Stone-ground tencha from shade-grown bushes. Vibrant green, creamy umami.</p>
+            </div>
+            <div class="washi-card rounded-lg p-6 text-center fade-in f-delay-1">
+                <span class="zen text-4xl block mb-4" style="color: var(--rust);">煎</span>
+                <h3 class="garamond text-lg mb-2">Sencha</h3>
+                <p class="text-xs italic mb-3" style="color: var(--stone);">Shizuoka</p>
+                <p class="text-sm" style="color: #6a5a4a;">First-flush leaves steamed and rolled. Bright, grassy, with a lingering sweetness.</p>
+            </div>
+            <div class="washi-card rounded-lg p-6 text-center fade-in f-delay-2">
+                <span class="zen text-4xl block mb-4" style="color: var(--moss);">焙</span>
+                <h3 class="garamond text-lg mb-2">Hōjicha</h3>
+                <p class="text-xs italic mb-3" style="color: var(--stone);">Kyoto</p>
+                <p class="text-sm" style="color: #6a5a4a;">Roasted green tea. Warm, toasty, low in caffeine. Perfect for evening.</p>
+            </div>
+            <div class="washi-card rounded-lg p-6 text-center fade-in f-delay-3">
+                <span class="zen text-4xl block mb-4" style="color: var(--rust);">玉</span>
+                <h3 class="garamond text-lg mb-2">Gyokuro</h3>
+                <p class="text-xs italic mb-3" style="color: var(--stone);">Uji, Kyoto</p>
+                <p class="text-sm" style="color: #6a5a4a;">Shade-grown premium leaf. Deep umami, sweet finish. The connoisseur's choice.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Visit Section -->
+<section class="py-32 relative" id="visit" style="background: rgba(245,240,232,0.5);">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="washi-card rounded-2xl p-8 md:p-16 text-center">
+            <span class="zen text-5xl block mb-6" style="color: var(--rust);">🍵</span>
+            <span class="text-sm tracking-widest" style="color: var(--stone);">VISIT THE TEA HOUSE</span>
+            <h2 class="garamond text-4xl md:text-5xl italic mt-4 mb-6" style="color: var(--ink);">You are welcome here.</h2>
+            <p class="text-base leading-relaxed mb-8 max-w-xl mx-auto" style="color: #6a5a4a;">
+                Nestled in a hidden garden in the ancient capital of Kyoto, our tea house has welcomed weary travellers for over three generations. No rush. No screens. Only tea, silence, and the sound of the wind through the bamboo.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm" style="color: #6a5a4a;">
+                <span>📍 47−2 Yabunouchi, Uji, Kyoto</span>
+                <span>🕐 Tue–Sun · 10:00 – 18:00</span>
+            </div>
+            <a href="#" class="inline-block px-10 py-4 text-sm tracking-wider transition-all rounded" style="background: var(--ink); color: var(--washi);">Arrange a Visit</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-12" style="background: var(--ink);">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <span class="zen text-lg" style="color: var(--rust);">紅茶</span>
+            <span class="garamond text-sm italic" style="color: var(--stone);">kōcha</span>
+        </div>
+        <div class="flex gap-6 text-xs garamond" style="color: var(--stone);">
+            <a href="#" class="hover:text-white transition-colors">Our Journal</a>
+            <a href="#" class="hover:text-white transition-colors">Tea Shop</a>
+            <a href="#" class="hover:text-white transition-colors">Privacy</a>
+            <a href="#" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <p class="text-xs" style="color: #4a4030;">© kōcha · The Wabi-Sabi Tea House · Kyoto</p>
+    </div>
+</footer>
+
+</body>
+</html>
