@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電 STEEL DOJO — Cyberpunk Kenjutsu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00fff9;
+            --magenta: #ff00aa;
+            --deep: #0a0a0f;
+            --charcoal: #12121a;
+            --grid: #1a1a2e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--deep);
+            color: #e0e0e0;
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .display { font-family: 'Orbitron', sans-serif; letter-spacing: 0.15em; text-transform: uppercase; }
+        .jp { font-family: 'Noto Sans JP', sans-serif; }
+
+        /* Scan lines */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,249,0.03) 2px, rgba(0,255,249,0.03) 4px);
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* Grid background */
+        .grid-bg {
+            position: fixed; inset: 0; z-index: 0;
+            background-image:
+                linear-gradient(rgba(0,255,249,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,249,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            perspective: 600px;
+        }
+
+        /* Glitch keyframes */
+        @keyframes glitch1 { 0%,100% { clip-path: inset(0 0 0 0); transform: translate(0); } 20% { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); } 40% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -1px); } 60% { clip-path: inset(10% 0 70% 0); transform: translate(-2px, 3px); } 80% { clip-path: inset(40% 0 40% 0); transform: translate(3px, -2px); } }
+        @keyframes glitch2 { 0%,100% { clip-path: inset(0 0 0 0); transform: translate(0); } 25% { clip-path: inset(60% 0 10% 0); transform: translate(3px, -2px); } 50% { clip-path: inset(30% 0 50% 0); transform: translate(-3px, 1px); } 75% { clip-path: inset(70% 0 20% 0); transform: translate(2px, -3px); } }
+
+        @keyframes neonPulse { 0%,100% { text-shadow: 0 0 7px var(--cyan), 0 0 10px var(--cyan), 0 0 21px var(--cyan), 0 0 42px var(--cyan); } 50% { text-shadow: 0 0 5px var(--cyan), 0 0 8px var(--cyan), 0 0 15px var(--cyan), 0 0 30px var(--cyan); } }
+        @keyframes neonPulseMagenta { 0%,100% { text-shadow: 0 0 7px var(--magenta), 0 0 10px var(--magenta), 0 0 21px var(--magenta), 0 0 42px var(--magenta); } 50% { text-shadow: 0 0 5px var(--magenta), 0 0 8px var(--magenta), 0 0 15px var(--magenta), 0 0 30px var(--magenta); } }
+        @keyframes drift { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+        @keyframes flicker { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .glitch { position: relative; display: inline-block; animation: glitch1 3s infinite; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .glitch::before { color: var(--magenta); z-index: -1; animation: glitch1 2.5s infinite; }
+        .glitch::after { color: var(--cyan); z-index: -2; animation: glitch2 3.5s infinite; }
+
+        .neon { animation: neonPulse 2s ease-in-out infinite; }
+        .neon-magenta { animation: neonPulseMagenta 2.5s ease-in-out infinite; }
+
+        .cyber-card {
+            background: rgba(10,10,15,0.85);
+            border: 1px solid rgba(0,255,249,0.2);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+        .cyber-card:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0,255,249,0.15), inset 0 0 20px rgba(0,255,249,0.05);
+            transform: translateY(-4px);
+        }
+
+        .hex {
+            position: absolute; width: 100%; height: 100%;
+            background: repeating-conic-gradient(rgba(0,255,249,0.02) 0% 25%, transparent 0% 50%) 0 0 / 60px 60px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .grid-bg { background-size: 30px 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 cyber-card rounded-none border-t-0 border-l-0 border-r-0">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <span class="display text-cyan-400 text-lg neon flex items-center gap-3">
+            <span class="text-2xl">⚡</span> STEEL DOJO
+        </span>
+        <div class="flex items-center gap-8 text-sm">
+            <a href="#ways" class="text-gray-400 hover:text-cyan-400 transition-colors">WAYS</a>
+            <a href="#programs" class="text-gray-400 hover:text-cyan-400 transition-colors">PROGRAMS</a>
+            <a href="#sensei" class="text-gray-400 hover:text-cyan-400 transition-colors">SENSEI</a>
+            <a href="#join" class="px-5 py-2 border border-magenta-500 text-magenta-400 hover:bg-magenta-500/10 transition-all rounded" style="border-color: var(--magenta); color: var(--magenta);">ENLIST <span class="text-xs ml-1">→</span></a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative min-h-screen flex items-center pt-20" id="hero">
+    <div class="hex"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <p class="display text-cyan-400 text-sm tracking-[0.3em] mb-4 neon flex items-center gap-2">
+                    <span class="w-8 h-px bg-cyan-400 inline-block"></span> SYSTEM.INIT
+                </p>
+                <h1 class="glitch text-6xl md:text-8xl font-black leading-none mb-6" data-text="鋼鉄の道" style="color: var(--cyan);">
+                    鋼鉄の道
+                </h1>
+                <p class="display text-3xl md:text-5xl font-bold mb-6 text-white">THE WAY OF STEEL</p>
+                <p class="text-gray-400 text-lg max-w-lg mb-8 leading-relaxed">
+                    Ancient kenjutsu recompiled for the cyber age. Neural-linked training pods, holographic sensei, and real-time combat analytics.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#join" class="px-8 py-4 bg-cyan-400 text-black font-bold display text-sm tracking-widest hover:bg-white transition-all rounded">BEGIN TRANSMISSION</a>
+                    <a href="#programs" class="px-8 py-4 border border-gray-700 text-gray-300 hover:border-cyan-400 hover:text-cyan-400 transition-all rounded display text-sm tracking-widest">VIEW PROGRAMS</a>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="w-80 h-80 md:w-96 md:h-96 rounded-full border border-cyan-400/30 flex items-center justify-center relative" style="box-shadow: 0 0 60px rgba(0,255,249,0.1), inset 0 0 60px rgba(0,255,249,0.05);">
+                    <div class="absolute inset-4 rounded-full border border-cyan-400/10"></div>
+                    <div class="absolute inset-8 rounded-full border border-magenta-400/20"></div>
+                    <span class="text-8xl opacity-80" style="animation: drift 4s ease-in-out infinite;">⚔</span>
+                    <div class="absolute top-4 left-4 text-xs text-cyan-400/50 font-mono">SYS::READY</div>
+                    <div class="absolute bottom-4 right-4 text-xs text-magenta-400/50 font-mono">KATANA::ARMED</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div class="text-center">
+            <span class="text-xs text-gray-600 font-mono">SCROLL TO INITIALIZE</span>
+            <div style="animation: drift 2s ease-in-out infinite;" class="mt-2 text-cyan-400/50">↓</div>
+        </div>
+    </div>
+</section>
+
+<!-- Ways Section -->
+<section class="py-24 relative" id="ways">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <p class="display text-xs text-cyan-400 tracking-[0.4em] mb-3 neon">CORE.DISCIPLINES</p>
+            <h2 class="display text-4xl md:text-5xl font-black text-white mb-4">THE THREE WAYS</h2>
+            <div class="w-20 h-px bg-cyan-400/50 mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="cyber-card p-8 rounded-lg text-center group">
+                <div class="text-5xl mb-4" style="animation: neonPulse 3s ease-in-out infinite;">⚔</div>
+                <h3 class="display text-lg text-cyan-400 mb-3">KENSEI PROTOCOL</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Neural-linked sword training with real-time biomechanical feedback. 10,000 cuts perfected through AI-driven form analysis.</p>
+            </div>
+            <div class="cyber-card p-8 rounded-lg text-center group">
+                <div class="text-5xl mb-4" style="animation: neonPulseMagenta 3s ease-in-out infinite;">🧠</div>
+                <h3 class="display text-lg text-magenta-400 mb-3" style="color: var(--magenta);">TACTICAL SYNAPSE</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">VR combat scenarios projected directly into your visual cortex. Face holographic opponents that learn and adapt to your style.</p>
+            </div>
+            <div class="cyber-card p-8 rounded-lg text-center group">
+                <div class="text-5xl mb-4" style="animation: neonPulse 3.5s ease-in-out infinite;">🌀</div>
+                <h3 class="display text-lg text-cyan-400 mb-3">ZEN.EXE</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">Ancient meditation protocols digitized. Achieve flow state through biofeedback-regulated breathing and neural entrainment.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programs Section -->
+<section class="py-24 relative" id="programs" style="background: rgba(255,0,170,0.02);">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <p class="display text-xs text-magenta-400 tracking-[0.4em] mb-3" style="animation: neonPulseMagenta 3s ease-in-out infinite;">TRAINING.TRACKS</p>
+            <h2 class="display text-4xl md:text-5xl font-black text-white mb-4">YOUR ASCENSION PATH</h2>
+            <div class="w-20 h-px bg-magenta-400/50 mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="cyber-card rounded-lg overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-cyan-900/40 to-deep-900/40 flex items-center justify-center relative" style="background: linear-gradient(135deg, rgba(0,255,249,0.1), rgba(10,10,15,0.8));">
+                    <span class="text-6xl">🥷</span>
+                    <span class="absolute bottom-2 right-2 text-[10px] text-cyan-400/30 font-mono">INITIATE</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="display text-cyan-400 text-sm mb-2">TIER 1 — IRON</h3>
+                    <p class="text-gray-400 text-sm mb-4">Foundations. Stance, breath, and the first cut. 12-week neural baseline program.</p>
+                    <span class="text-xs text-cyan-400/50 font-mono">REQUIREMENTS: NONE</span>
+                </div>
+            </div>
+            <div class="cyber-card rounded-lg overflow-hidden border-magenta-400/30">
+                <div class="h-48 flex items-center justify-center relative" style="background: linear-gradient(135deg, rgba(255,0,170,0.1), rgba(10,10,15,0.8));">
+                    <span class="text-6xl">⚔</span>
+                    <span class="absolute top-2 right-2 text-[10px] text-magenta-400/50 font-mono">ELITE</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="display text-magenta-400 text-sm mb-2" style="color: var(--magenta);">TIER 2 — STEEL</h3>
+                    <p class="text-gray-400 text-sm mb-4">Adaptive combat. Holographic sparring, pressure testing, live neural feedback loops.</p>
+                    <span class="text-xs text-magenta-400/50 font-mono">REQUIREMENTS: TIER 1</span>
+                </div>
+            </div>
+            <div class="cyber-card rounded-lg overflow-hidden">
+                <div class="h-48 flex items-center justify-center relative" style="background: linear-gradient(135deg, rgba(0,255,249,0.1), rgba(10,10,15,0.8));">
+                    <span class="text-6xl">🏯</span>
+                    <span class="absolute bottom-2 right-2 text-[10px] text-cyan-400/30 font-mono">MASTER</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="display text-cyan-400 text-sm mb-2">TIER 3 — DAMASCUS</h3>
+                    <p class="text-gray-400 text-sm mb-4">Mastery. Teach the system, forge your own kata, become a holographic sensei.</p>
+                    <span class="text-xs text-cyan-400/50 font-mono">REQUIREMENTS: TIER 2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sensei Section -->
+<section class="py-24 relative" id="sensei">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <p class="display text-xs text-cyan-400 tracking-[0.4em] mb-3 neon">MEET.YOUR.SENSEI</p>
+                <h2 class="display text-4xl md:text-6xl font-black text-white mb-6">HOLOGRAPHIC<br><span style="color: var(--magenta);">MASTERY</span></h2>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                    Our sensei are not born — they're compiled. Each holographic instructor contains the combined knowledge of 47 generations of kenjutsu masters, digitized, analyzed, and optimized for neural transfer.
+                </p>
+                <div class="cyber-card rounded-lg p-6 inline-block">
+                    <p class="text-sm text-cyan-400 font-mono mb-2">SENSEI.MATRIX v4.7</p>
+                    <div class="flex gap-4 text-xs text-gray-500">
+                        <span>47 generational uploads</span>
+                        <span class="text-cyan-400/50">|</span>
+                        <span>12,000 hours of combat</span>
+                        <span class="text-cyan-400/50">|</span>
+                        <span>99.7% transfer fidelity</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <div class="cyber-card rounded-lg p-8 text-center max-w-sm">
+                    <div class="text-7xl mb-4">👤</div>
+                    <p class="display text-cyan-400 text-sm tracking-widest">SENSEI // KENSHIRO</p>
+                    <p class="text-gray-500 text-xs mt-2 font-mono">v4.7.2 // ACTIVE</p>
+                    <div class="mt-4 flex justify-center gap-1">
+                        <span class="w-12 h-1 bg-cyan-400/50 rounded"></span>
+                        <span class="w-8 h-1 bg-gray-700 rounded"></span>
+                        <span class="w-8 h-1 bg-gray-700 rounded"></span>
+                        <span class="w-8 h-1 bg-gray-700 rounded"></span>
+                    </div>
+                    <p class="text-gray-500 text-xs mt-3">LOADING: KENSEI PROTOCOL v7.2</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Join Section -->
+<section class="py-24 relative" id="join" style="background: rgba(0,255,249,0.02);">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <p class="display text-xs text-cyan-400 tracking-[0.4em] mb-3 neon">INITIALIZE.YOUR.JOURNEY</p>
+            <h2 class="display text-4xl md:text-5xl font-black text-white mb-4">ENLIST TODAY</h2>
+            <p class="text-gray-500">Complete the form. Your neural handshake begins.</p>
+        </div>
+        <form class="cyber-card rounded-lg p-8 md:p-12 max-w-2xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label for="name" class="block text-xs text-cyan-400 font-mono mb-2 tracking-wider">DESIGNATION</label>
+                    <input type="text" id="name" class="w-full bg-deep border border-gray-800 rounded px-4 py-3 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors" placeholder="Your callsign" style="background: rgba(10,10,15,0.8);">
+                </div>
+                <div>
+                    <label for="email" class="block text-xs text-cyan-400 font-mono mb-2 tracking-wider">COMMS.LINK</label>
+                    <input type="email" id="email" class="w-full bg-deep border border-gray-800 rounded px-4 py-3 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors" placeholder="neural@interface.net" style="background: rgba(10,10,15,0.8);">
+                </div>
+            </div>
+            <div class="mb-6">
+                <label for="tier" class="block text-xs text-cyan-400 font-mono mb-2 tracking-wider">ASCENSION.TIER</label>
+                <select id="tier" class="w-full bg-deep border border-gray-800 rounded px-4 py-3 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors" style="background: rgba(10,10,15,0.8);">
+                    <option class="bg-deep">IRON — Initiate</option>
+                    <option class="bg-deep">STEEL — Elite</option>
+                    <option class="bg-deep">DAMASCUS — Master</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label for="message" class="block text-xs text-cyan-400 font-mono mb-2 tracking-wider">TRANSMISSION</label>
+                <textarea id="message" rows="4" class="w-full bg-deep border border-gray-800 rounded px-4 py-3 text-white text-sm focus:border-cyan-400 focus:outline-none transition-colors" placeholder="Your message to the dojo..." style="background: rgba(10,10,15,0.8);"></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 bg-cyan-400 text-black font-bold display text-sm tracking-widest hover:bg-white transition-all rounded flex items-center justify-center gap-2">
+                <span>TRANSMIT NEURAL HAND SHAKE</span>
+                <span>→</span>
+            </button>
+            <p class="text-center text-gray-600 text-xs mt-4 font-mono">Your neural data is encrypted. We respect the way of privacy.</p>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-gray-900 py-8">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <span class="display text-cyan-400 text-sm neon">⚡ STEEL DOJO</span>
+        <div class="flex gap-6 text-xs text-gray-600 font-mono">
+            <a href="#" class="hover:text-cyan-400 transition-colors">PRESS</a>
+            <a href="#" class="hover:text-cyan-400 transition-colors">CAREERS</a>
+            <a href="#" class="hover:text-cyan-400 transition-colors">PRIVACY PROTOCOL</a>
+            <a href="#" class="hover:text-cyan-400 transition-colors">CONTACT</a>
+        </div>
+        <span class="text-xs text-gray-700 font-mono">© 2602 STEEL DOJO // ALL RIGHTS RESERVED</span>
+    </div>
+</footer>
+
+</body>
+</html>
